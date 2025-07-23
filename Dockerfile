@@ -31,6 +31,10 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/.env.example ./
 COPY --from=builder /app/drizzle.config.ts ./
+COPY docker/entrypoint.sh ./
 
-# 启动命令
-CMD ["node", "dist/main.js"]
+# 赋予 entrypoint.sh 可执行权限
+RUN chmod +x entrypoint.sh
+
+# 先执行数据库迁移，再启动主程序
+ENTRYPOINT ["/bin/sh", "-c", "./entrypoint.sh"]
