@@ -73,8 +73,8 @@ async function collectRssUrlsFromAllSources(): Promise<string[]> {
 
   // 1. Read from fedd.txt file
   try {
-    const txtUrls = await readRssUrlsFromFile('fedd.txt');
-    logger.info(`Found ${txtUrls.length} URLs from fedd.txt`);
+    const txtUrls = await readRssUrlsFromFile('feed.txt');
+    logger.info(`Found ${txtUrls.length} URLs from feed.txt`);
     for (const url of txtUrls) {
       if (!urlSet.has(url)) {
         urlSet.add(url);
@@ -82,7 +82,7 @@ async function collectRssUrlsFromAllSources(): Promise<string[]> {
       }
     }
   } catch (error) {
-    logger.warn('Warning: Could not read fedd.txt');
+    logger.warn('Warning: Could not read feed.txt');
   }
 
   // 2. Read from feed.xml file (as OPML file)
